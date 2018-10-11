@@ -24,7 +24,6 @@ describe('POST /todos', () => {
     request(app)
     .post('/todos')
     .send({text})//sending data with the body as JSON
-    //assertions
     .expect(200)
     .expect((res) => {
       expect(res.body.text).toBe(text);
@@ -41,7 +40,7 @@ describe('POST /todos', () => {
         done();
       }).catch((e) => done(e));
     });
-  });
+ });
 
   it('should not create todo with invalid data', (done) => {
     request(app)

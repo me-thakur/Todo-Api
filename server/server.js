@@ -1,6 +1,6 @@
 //library imports
 var express = require('express');
-var bodyParser = require('body-parser'); //body parser take the body and pass the JSON
+var bodyParser = require('body-parser'); //Parse incoming request bodies in a middleware before your handlers
 
 
 //local imports
@@ -10,7 +10,7 @@ var {User} = require('./models/user');
 
 var app = express();
 
-app.use(bodyParser.json()); //middleware
+app.use(bodyParser.json()); //Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option.
 
 app.post('/todos', (req, res) => {
   //console.log(req.body);
@@ -18,19 +18,19 @@ app.post('/todos', (req, res) => {
     text: req.body.text
   });
 
-  todo.save().then((doc) => {
+  todo.save().then((doc) => { //save model to the database
     res.send(doc);
   }, (e) => {
     res.status(400).send(e);
   });
 });
 
-app.get('/todos', (req,res) => {
-  Todo.find().then(() => {
+app.get('/todos', (req, res) => {
+  Todo.find().then((todos) => {
     res.send({todos});
   }, (e) => {
     res.status(400).send(e);
-  })
+  });
 });
 
 app.listen(3001, () => {

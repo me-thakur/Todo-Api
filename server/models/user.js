@@ -18,7 +18,10 @@ module.exports = {User};
 
 
 // var newUser = new User({
-//   email: ''
+//   email: {
+// type: 'text',
+// required: true
+// }
 // });
 //
 // newUser.save().then((doc) => {

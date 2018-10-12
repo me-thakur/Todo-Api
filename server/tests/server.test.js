@@ -10,7 +10,6 @@ const todos = [{
   text: 'Second test todo'
 }];
 
-//removing every todo because we are assuming the length of todo list to be one
 beforeEach((done) => {
   Todo.deleteMany({}).then(() => {
     return Todo.insertMany(todos);//insertMany insert all the objects in the array to the database

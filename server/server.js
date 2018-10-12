@@ -1,3 +1,5 @@
+require('./config/config')
+
 //library imports
 const _ = require('lodash');
 const express = require('express');
@@ -10,7 +12,7 @@ const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 
 var app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 
 app.use(bodyParser.json()); //Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option.
 

@@ -15,6 +15,7 @@ const todos = [{
   completedAt: 333
 }];
 
+
 beforeEach((done) => {
   Todo.deleteMany({}).then(() => {
     return Todo.insertMany(todos);//insertMany insert all the objects in the array to the database

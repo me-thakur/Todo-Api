@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
+const bcrypt = require('bcryptjs');
 
 var UserSchema = new mongoose.Schema({
   email: {
@@ -32,6 +33,7 @@ var UserSchema = new mongoose.Schema({
   }]
 });
 
+//THINGS YOU WANT TO SEND TO THE USER some properties are security related
 UserSchema.methods.toJSON = function() {
   var user = this;
   var UserObject = user.toObject();
@@ -39,6 +41,8 @@ UserSchema.methods.toJSON = function() {
   return _.pick(UserObject, ['_id','email']);
 };
 
+
+//AUTHENTICATE THE USER AND SEND IT IT TO tokens ARRAY IN SCHEMA
 UserSchema.methods.generateAuthToken = function() {
   var user = this;
   var access = 'auth';
@@ -67,6 +71,22 @@ UserSchema.statics.findByToken = function (token) {
     'tokens.access': 'auth'
   });
 };
+
+//CHANGES BEFROE SAVING TODOS TO THE DATABASE LIKE ADDING A HASHPASSWORD
+UserSchema.pre('save', function (next) {
+  var user = this;
+
+  if (user.isModified('password')){
+    bcrypt.genSalt(10,  (err, salt) => {
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        user.password = hash;
+        next();
+      });
+    });
+  } else {
+    next();
+  }
+})
 
 var User = mongoose.model('User', UserSchema);
 

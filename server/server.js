@@ -111,7 +111,7 @@ app.post('/users' , (req, res) => {
   })
 });
 
-app.get('/users/me', authenticate, (req, res) => {
+app.get('/users/me', authenticate, (req, res) => { //USING A SELF CREATED AUTHENTICATE MIDDLEWARE(authenticate.js)
   res.send(req.user);
 });
 

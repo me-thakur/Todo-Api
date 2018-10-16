@@ -357,7 +357,7 @@ describe('GET /todos', () => {
               return done(err)
             }
             User.findById(users[0]._id).then((user) => {
-              expect(user.tokens.length).toBe(1);
+              expect(user.tokens.length).toBe(0);
               done();
             }).catch((e) => done(e))
           });

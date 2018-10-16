@@ -59,7 +59,9 @@ UserSchema.methods.removeToken = function (token) {
   var user = this;
 
   return user.update({
-    $pull: {token}
+    $pull:{
+      tokens: {token}
+    }
   });
 };
 UserSchema.statics.findByToken = function (token) {

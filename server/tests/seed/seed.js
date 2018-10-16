@@ -32,7 +32,7 @@ const todos = [{
 
 
 const populateTodos = (done) => {
-  Todo.deleteMany({}).then(() => {
+  Todo.deleteMany({}).then(() => { //removing all todos before inputing them again
     return Todo.insertMany(todos);  //insertMany insert all the objects in the array to the database
   }).then(() => done())
 };
@@ -42,6 +42,7 @@ const populateUsers = (done) => {
     var userOne = new User(users[0]).save();
     var userTwo = new User(users[1]).save();
 
+     //resolving all promise
     return Promise.all([userOne, userTwo])
   }).then(() => done());
 };

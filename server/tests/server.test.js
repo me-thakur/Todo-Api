@@ -84,13 +84,13 @@ describe('GET /todos', () => {
     });
     it('should return 404 for non object ids', (done) => {
       request(app)
-      .get(`/todos/123abc.toHexString()}`)
+      .get(`/todos/123abc}`)
       .expect(404)
       .end(done)
     });
   });
 
-    describe('DELETE/todos/:id', () => {
+    describe('DELETE /todos/:id', () => {
       it('should remove a todo', (done) => {
         var hexId = todos[1]._id.toHexString();
         request(app)
@@ -125,7 +125,8 @@ describe('GET /todos', () => {
       });
     });
 
-    describe('PATCH/todos/:id', () => {
+    //UPDATE DATA
+    describe('PATCH /todos/:id', () => {
       it('should update the todo', (done) => {
         var hexId = todos[0]._id.toHexString();
         var text = "Changed text";
@@ -169,7 +170,7 @@ describe('GET /todos', () => {
       it('should return user if authenticated', (done) => {
         request(app)
         .get('/users/me')
-        .set('x-auth', users[0].tokens[0].token)
+        .set('x-auth', users[0].tokens[0].token) //SETTING THE HEADER 'x-auth'
         .expect(200)
         .expect((res) => {
           expect(res.body._id).toBe(users[0]._id.toHexString());
@@ -191,7 +192,7 @@ describe('GET /todos', () => {
 
       describe('POST /users', () => {
         it('should create a user', (done) => {
-          var email = 'example@examole.com'
+          var email = 'example@example.com'
           var password = '123mnb';
 
           request(app)
@@ -210,7 +211,7 @@ describe('GET /todos', () => {
 
             User.findOne({email}).then((user) => {
               expect(user).toExist();
-              expect(user.password).toNotBe(password);
+              expect(user.password).toNotBe(password); //PASSWORD STORED IS HASHED PASSWORD SO IT SHOULD NOT BE EQUAL TO password VARIABLE
               done();
             }).catch((e) => done(e));
           });
